@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* app.css */
 body {
   font-family: Arial, sans-serif;
@@ -18,3 +19,25 @@ a {
 .wrapper {
   padding: 0 2rem; /* Apply gap to the whole page */
 }
+=======
+/* app.css */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  padding: 10px 2rem; /* Horizontal padding for a gap */
+}
+
+.wrapper {
+  padding: 0 2rem; /* Apply gap to the whole page */
+}
+>>>>>>> c19cbdaaaa0025fbcaeb551c13b3bfb0cc862d95
