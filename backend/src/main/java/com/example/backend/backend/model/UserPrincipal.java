@@ -1,4 +1,4 @@
-package com.example.ecommerce_backEnd.Model;
+package com.example.backend.backend.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,9 +11,9 @@ import java.util.Collections;
 public class UserPrincipal implements UserDetails {
 
     @Autowired
-    private UserDetail userDetail;
+    private User userDetail;
 
-    public UserPrincipal(UserDetail userDetail){
+    public UserPrincipal(User userDetail){
         this.userDetail=userDetail;
     }
 

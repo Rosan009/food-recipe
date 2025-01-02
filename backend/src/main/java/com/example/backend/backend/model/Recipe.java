@@ -1,5 +1,8 @@
 package com.example.backend.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardData {
+public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,10 +24,22 @@ public class CardData {
     private String image;
     private String duration;
     private Float rating;
+    private String type;
+    private String chef;
 
-    @OneToMany(mappedBy = "cardData", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Ingredient> ingredients = new ArrayList<>();
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Ingredients> ingredients = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cardData", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Procedure> procedures = new ArrayList<>();
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Procedures> procedures = new ArrayList<>();
+
+    @JsonCreator
+    public Recipe(@JsonProperty("id") Long id) {
+        this.id = id;
+    }
+
+
 }
+

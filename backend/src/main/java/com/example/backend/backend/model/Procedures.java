@@ -1,9 +1,16 @@
 package com.example.backend.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class Procedure {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Procedures {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -12,7 +19,7 @@ public class Procedure {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
+    @JsonBackReference
     private Recipe recipe;
-
-    // Getters and setters
 }
+
