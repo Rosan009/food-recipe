@@ -1,9 +1,28 @@
-import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import React, { useRef, useState, useEffect } from 'react';
 
-const Card = ({ cardData }) => {
+const Card = () => {
+  const [cardData, setCardData] = useState([]);
   const cardContainerRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCardData = async () => {
+      try {
+        const response = await fetch('http://localhost:8081/user/cards');
+        if (!response.ok) {
+          throw new Error(`Failed to fetch card data: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setCardData(data);
+      } catch (error) {
+        console.error('Error fetching card data:', error);
+        alert('Failed to load card data from the server.');
+      }
+    };
+
+    fetchCardData();
+  }, []);
 
   const moveSlider = (direction) => {
     const container = cardContainerRef.current;
@@ -18,6 +37,11 @@ const Card = ({ cardData }) => {
 const container={
   position:'relative',
   bottom:80,
+  overflow:'hidden'
+}
+const contain={
+  position:'relative',
+  padding: '10px 2rem'
 }
   const fullImageStyle = {
     position: 'relative',
@@ -32,8 +56,9 @@ const container={
   const gradientStyle = {
     position: 'absolute',
     top: 0,
-    left: 10,
-    width: '110%', // Apply gradient on the left 50%
+    left: 0,
+    width: '100%',
+    
     height: '320px',
     background: 'linear-gradient(to right, black, transparent)', 
     borderRadius: '8px',
@@ -111,47 +136,48 @@ const container={
     margin: '0 10px',
   };
   const fullImageHeadingStyle = {
-  fontSize: '1.6rem', // Decreased font size for the full image heading
+  fontSize: '1.6rem',
   marginBottom: '10px',
   wordWrap: 'break-word',
-  color: '#FFA500', // Set heading color to orange
+  color: '#FFA500',
 };
 
 const fullImageButtonStyle = {
   backgroundColor: '#FFA500',
-  color: 'white',  // Ensure the text color is white
+  color: 'white', 
   border: 'none',
   borderRadius: '5px',
-  padding: '8px',  // Adjust padding for smaller button size
+  padding: '8px',  
   cursor: 'pointer',
   width: '120px',
-  fontSize: '0.9rem', // Decreased font size for the button
+  fontSize: '0.9rem', 
   marginTop: '10px',
 };
 const fulldescriptionStyle = {
   fontSize: '0.9rem',
   marginBottom: '10px',
-  color: 'white',  // Changed the color to white
+  color: 'white',  
 };
 const fullImageTitleStyle = {
-  fontSize: '1rem', // Set a larger font size for the heading
-  color: 'white', // Set the color to orange
-  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)', // Optional text shadow for better visibility
-  position: 'absolute', // Fix the heading at the top
-  top: 100, // Position from the top of the container
-  left: 90, // Center horizontally
-  transform: 'translateX(-50%)', // Center horizontally using transform
+  fontSize: '1rem', 
+  color: 'white',
+  textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)', 
+  position: 'absolute', 
+  top: 100, 
+  left: 90, 
+  transform: 'translateX(-50%)', 
 };
-  const handleGetRecipe = (recipe) => {
-    navigate(`/recipe/${recipe.id}`, { state: { recipe } });
-  };
+const handleGetRecipe = (recipe) => {
+  navigate(`/recipe/${recipe.id}`, { state: { recipe } });
+};
+
 
   return (
-    <div>
+    <div style={contain} >
       {/* Vegetable Sizzler Section */}
       <div style={fullImageStyle}>
         <img
-          src="/image/burger-icon-cartoon-hamburger-fast-food-symbol_80590-14811.jpg"
+          src="\image\WhatsApp Image 2024-12-27 at 20.21.26_b1db917c.jpg"
           alt="Vegetable sizzler"
           style={{ width: '100%', height: '80%', objectFit: 'cover' }}
         />
@@ -160,9 +186,9 @@ const fullImageTitleStyle = {
         <div style={textContainerStyle}>
           <h2 style={fullImageHeadingStyle}>Vegetable Sizzler</h2>
           <p style={fulldescriptionStyle}>
-            Sizzlers are a favorite with Indians, as they come with sizzler plates, with tikkis, rice,
-            stir-fried vegetables, French fries, and tasty barbecue sauce.
-          </p>
+          Sizzlers are a favorite with Indians, as they come with 
+sizzler plates, with tikkis, rice, stir-fried vegetables, 
+French fries, and tasty barbecue sauce.          </p>
           <button
             style={fullImageButtonStyle}
             onClick={() =>
@@ -185,8 +211,8 @@ const fullImageTitleStyle = {
       <h2 style={{ fontSize: '2rem',marginLeft:'30px',position:'relative',bottom:80, color: '#FFA500'}}>
         Popular Recipes
       </h2>
-      <div style={container}>
-        <button
+      <div style={container} >
+        {/* <button
           style={{
             position: 'absolute',
             top: '50%',
@@ -202,7 +228,7 @@ const fullImageTitleStyle = {
           onClick={() => moveSlider('left')}
         >
           <i className="fas fa-chevron-left"></i>
-        </button>
+        </button> */}
 
         <div ref={cardContainerRef} style={cardContainerStyle}>
           {cardData.map((item, index) => (
@@ -235,22 +261,23 @@ const fullImageTitleStyle = {
         </div>
 
         <button
-          style={{
-            position: 'absolute',
-            top: '50%',
-            right: '10px',
-            zIndex: 10,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '50%',
-            padding: '10px',
-            cursor: 'pointer',
-          }}
-          onClick={() => moveSlider('right')}
-        >
-          <i className="fas fa-chevron-right"></i>
-        </button>
+  style={{
+    position: 'absolute',
+    top: '50%',
+    right: '10px',
+    zIndex: 10,
+    backgroundColor: '#fff', 
+    color: 'orange',
+    border: 'none',
+    borderRadius: '50%',
+    padding: '10px',
+    cursor: 'pointer',
+  }}
+  onClick={() => moveSlider('right')}
+>
+  <i className="fas fa-chevron-right" style={{ color: 'orange' }}></i>
+</button>
+
       </div>
     </div>
   );

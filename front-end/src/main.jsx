@@ -5,7 +5,7 @@ import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Router> {/* Wrap App with Router */}
+    <Router> 
       <App />
     </Router>
   </StrictMode>,
